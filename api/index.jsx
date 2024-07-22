@@ -13,6 +13,7 @@ const multer = require('multer');
 const uploadMiddleware = multer({dest: 'uploads/' });
 const fs = require('fs');
 const { createCanvas, loadImage } = require('canvas');
+const path = require('path');
 
 const app = express();
 
@@ -23,6 +24,12 @@ app.use(cors({credentials:true,origin:'http://localhost:5000'}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 mongoose.connect(process.env.DB_CONNECTION_STRING);
 
@@ -41,6 +48,7 @@ app.post('/register', async(req, res) => {
 		res.status(400).json(e);
 	}
 });
+
 
 // Login route
 app.post('/login', async (req, res) => {
@@ -305,7 +313,7 @@ app.delete('/comment/:id', async (req, res) => {
 });
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

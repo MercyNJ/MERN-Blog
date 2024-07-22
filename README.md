@@ -1,3 +1,4 @@
 Repository for a Blog Web App Built with the MERN Stack
 
-Detailed README to be updated upon completion.
+Find the blog at : 
+    inlightofeternity.co.ke
